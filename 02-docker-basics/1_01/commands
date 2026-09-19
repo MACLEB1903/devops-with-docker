@@ -1,0 +1,4 @@
+docker  run  -d nginx
+docker  run  -d nginx
+docker  stop e69
+docker  ps  -a 
