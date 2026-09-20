@@ -1,0 +1,3 @@
+docker  stop f1f
+docker  rm e69 f1f
+docker  rmi nginx
