@@ -1,0 +1,3 @@
+docker run devopsdockeruh/simple-web-service:ubuntu
+docker exec -it c2b4cad4676d sh
+ls cat text.log
