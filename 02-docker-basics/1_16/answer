@@ -1,0 +1,3 @@
+https://todo-app.ashywave-d89e4552.brazilsouth.azurecontainerapps.io/
+
+his application is deployed and running on Azure Container Apps. I pushed the Docker image to Docker Hub and then deployed the application using Azure Container Apps.
