@@ -1,0 +1,26 @@
+services:
+  frontend:
+    image: macleb1903/hello-frontend
+    container_name: frontend
+    ports:
+      - 5001:5001
+  backend:
+    image: macleb1903/hello-backend
+    container_name: backend
+    ports:
+      - 8080:8080
+    environment:
+      - REQUEST_ORIGIN=http://localhost:5001
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=db
+      - POSTGRES_PASSWORD=postgres
+  redis:
+    image: redis
+
+  db:
+    image: postgres:18
+    restart: unless-stopped
+    volumes:
+      - ./database:/var/lib/postgresql
+    environment:
+      POSTGRES_PASSWORD: postgres
