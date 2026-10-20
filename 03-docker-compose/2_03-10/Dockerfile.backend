@@ -1,0 +1,3 @@
+FROM macleb1903/hello-backend
+ENV REQUEST_ORIGIN=http://localhost:8000
+RUN go build
