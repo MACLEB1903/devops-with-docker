@@ -1,0 +1,11 @@
+services:
+  todo-app:
+    build: .
+    command: npm run dev -- --webpack
+    container_name: todo-app
+    ports:
+      - "3000:3000"
+    environment:
+      WATCHPACK_POLLING: "true"
+    volumes:
+      - ./src/components/GreetingHeader.tsx:/usr/src/app/src/components/GreetingHeader.tsx

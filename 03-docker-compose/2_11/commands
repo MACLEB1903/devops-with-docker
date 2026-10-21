@@ -1,0 +1,3 @@
+mkdir -p ./src/components
+docker cp temp-todo:/usr/src/app/src/components/GreetingHeader.tsx ./src/components/
+BUILDKIT_PROGRESS=plain docker compose up -d --build
