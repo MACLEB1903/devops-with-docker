@@ -9,6 +9,9 @@ jobs:
   test:
     name: ${{ matrix.script }}
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 02-docker-basics/tests
     strategy:
       fail-fast: false
       matrix:
