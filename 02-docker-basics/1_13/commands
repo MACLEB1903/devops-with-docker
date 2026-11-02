@@ -1,0 +1,2 @@
+docker build -t go .
+docker run -t -p 8080:8080 go
