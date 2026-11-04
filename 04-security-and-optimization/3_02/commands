@@ -1,0 +1,3 @@
+Pipeline URL: https://github.com/MACLEB1903/devops-with-docker/blob/main/.github/workflows/express-app.yml
+
+Explanation: I created a pipeline that has two jobs: first, to build and push the image to docker hub and second, deploy the application to azure container registry.
