@@ -5,6 +5,7 @@ on:
     branches: ["main"]
     paths:
       - "/todo-app/**"
+    workflow_dispatch:
 
 env:
   IMAGE_NAME: macleb1903/todo-app
