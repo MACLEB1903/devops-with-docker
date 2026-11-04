@@ -1,9 +1,10 @@
-name: tests
+name: Test Chapter 2 Exercises
 
 on:
   push:
-  pull_request:
-  workflow_dispatch:
+    branches: ["main"]
+    paths:
+      - "/02-docker-basics/**"
 
 jobs:
   test:
