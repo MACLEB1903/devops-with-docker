@@ -8,7 +8,8 @@ services:
     ports:
       - 8080:8080
     environment:
-      - REQUEST_ORIGIN:http://localhost:5001
+      - REQUEST_ORIGIN=http://localhost:5001
+      - REDIS_HOST=redis
     command:
       - "./server"
 
@@ -23,10 +24,15 @@ services:
     ports:
       - 5001:5001
     environment:
-      - REACT_APP_BACKEND_URL:http://localhost:8080
+      - REACT_APP_BACKEND_URL=http://localhost:8080
     command:
       - serve
       - -s
       - -l
       - "5001"
       - build
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: redis
+    restart: unless-stopped
