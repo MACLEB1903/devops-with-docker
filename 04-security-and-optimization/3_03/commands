@@ -1,0 +1,6 @@
+docker login
+
+chmod 700 builder.sh
+./builder.sh
+
+./builder.sh <github-repo> <docker_hub_username/image_name>
