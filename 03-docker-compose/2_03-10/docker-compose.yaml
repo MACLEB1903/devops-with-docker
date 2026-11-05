@@ -1,0 +1,32 @@
+services:
+  backend:
+    image: backend
+    container_name: backend
+    build:
+      context: ../example-app/backend
+      dockerfile: Dockerfile.backend
+    ports:
+      - 8080:8080
+    environment:
+      - REQUEST_ORIGIN:http://localhost:5001
+    command:
+      - "./server"
+
+  frontend:
+    image: frontend
+    container_name: frontend
+    build:
+      context: ../example-app/frontend
+      dockerfile: Dockerfile.frontend
+    depends_on:
+      - backend
+    ports:
+      - 5001:5001
+    environment:
+      - REACT_APP_BACKEND_URL:http://localhost:8080
+    command:
+      - serve
+      - -s
+      - -l
+      - "5001"
+      - build
