@@ -43,7 +43,7 @@ services:
     container_name: redis
     restart: unless-stopped
 
-  db:
+  postgres:
     image: postgres:18-alpine
     restart: unless-stopped
     container_name: postgres
@@ -51,3 +51,5 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
+    volumes:
+      - ./database:/var/lib/postgresql
