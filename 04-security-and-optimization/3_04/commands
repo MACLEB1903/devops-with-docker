@@ -1,0 +1,4 @@
+docker run -e DOCKER_USER=<docker_username> \
+ -e DOCKER_PWD=<docker_password> \
+ -v /var/run/docker.sock:/var/run/docker.sock \
+ builder <github-repo> <docker-image>
