@@ -53,3 +53,11 @@ services:
       - POSTGRES_DB=postgres
     volumes:
       - ./database:/var/lib/postgresql
+
+  nginx:
+    image: nginx
+    container_name: nginx
+    ports:
+      - 8000:80
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
