@@ -1,0 +1,15 @@
+FROM macleb1903/hello-backend
+
+USER root
+WORKDIR /usr/src/app
+
+RUN adduser -D appuser && \
+    chown -R appuser:appuser /usr/src/app
+
+USER appuser
+
+ARG REQUEST_ORIGIN=http://localhost:5001
+ENV REQUEST_ORIGIN=${REQUEST_ORIGIN}
+
+EXPOSE 8000
+CMD ["./server"]
