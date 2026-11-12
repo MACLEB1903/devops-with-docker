@@ -1,0 +1,23 @@
+FROM golang:alpine
+
+WORKDIR /usr/src/app
+
+COPY app/hello-backend/go.mod app/hello-backend/go.sum ./
+COPY app/hello-backend/. ./
+
+ARG REQUEST_ORIGIN=http://localhost:5001
+ENV REQUEST_ORIGIN=${REQUEST_ORIGIN}
+
+RUN go mod download && \
+    go build && \
+    go test ./... && \
+    adduser -D appuser && \
+    chown -R appuser:appuser /usr/src/app
+
+USER appuser
+
+ARG PORT=8080
+ENV PORT=${PORT}
+EXPOSE $PORT
+
+CMD ["./server"]

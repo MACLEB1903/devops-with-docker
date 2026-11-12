@@ -1,0 +1,17 @@
+services:
+  hello-frontend:
+    build:
+      context: ..
+      dockerfile: 3_07/Dockerfile.frontend
+    container_name: hello-frontend
+    ports:
+      - 5001:5001
+    image: 3-07-hello-frontend
+  hello-backend:
+    build:
+      context: ..
+      dockerfile: 3_07/Dockerfile.backend
+    ports:
+      - 8080:8080
+    container_name: hello-backend
+    image: 3-07-hello-backend

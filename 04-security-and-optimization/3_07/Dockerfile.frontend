@@ -1,0 +1,22 @@
+FROM node:16-alpine
+WORKDIR /usr/src/app
+
+USER root
+
+COPY app/hello-frontend/package*.json ./
+COPY app/hello-frontend/. .
+
+ARG REACT_APP_BACKEND_URL=http://localhost:8080
+ENV REACT_APP_BACKEND_URL=${REACT_APP_BACKEND_URL}
+
+RUN npm install && \
+    npm run build && \
+    npm install -g serve && \
+    adduser -D appuser && \
+    chown -R appuser:appuser /usr/src/app
+
+USER appuser
+
+EXPOSE 5001
+
+CMD ["serve", "-s", "-l", "5001", "build"]
