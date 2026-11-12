@@ -1,0 +1,9 @@
+services:
+  hello-frontend:
+    build:
+      context: ..
+      dockerfile: 3_08/Dockerfile.frontend
+    container_name: hello-frontend
+    ports:
+      - 5001:80
+    image: 3-08-hello-frontend
