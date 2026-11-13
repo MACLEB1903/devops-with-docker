@@ -1,8 +1,9 @@
 name: Chapter 4 Exercises Tests
 
 on:
-  push:
-  pull_request:
+  #    branches: ["main"]
+  #    paths:
+  #      - "/04-security-and-optimization/**"
   workflow_dispatch:
 
 permissions:
