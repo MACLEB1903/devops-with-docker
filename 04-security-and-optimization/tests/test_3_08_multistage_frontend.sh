@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Verifies exercise 3.8: 3_89/Dockerfile.frontend is a genuine multi-stage
+# Verifies exercise 3.8: 3_08/Dockerfile.frontend is a genuine multi-stage
 # build -- a build stage that runs npm install/npm run build, and a
 # separate, leaner final stage that only copies over the built "build"
 # folder (via COPY --from=<build stage>), not the original source or
@@ -12,7 +12,7 @@
 set -uo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-FRONTEND_DOCKERFILE="$REPO_ROOT/3_89/Dockerfile.frontend"
+FRONTEND_DOCKERFILE="$REPO_ROOT/3_08/Dockerfile.frontend"
 
 FRONTEND_IMAGE="dod-3-8-frontend:test"
 FRONTEND_CONTAINER="dod-3-8-frontend-test"
@@ -31,8 +31,8 @@ cleanup() {
 }
 trap cleanup EXIT
 
-[ -f "$FRONTEND_DOCKERFILE" ] || fail "3_89/Dockerfile.frontend not found"
-pass "3_89/Dockerfile.frontend exists"
+[ -f "$FRONTEND_DOCKERFILE" ] || fail "3_08/Dockerfile.frontend not found"
+pass "3_08/Dockerfile.frontend exists"
 
 # Must actually be multi-stage: more than one FROM instruction.
 from_count=$(grep -cE '^\s*FROM\s+' "$FRONTEND_DOCKERFILE")
@@ -86,11 +86,11 @@ frontend_container_port() {
 }
 FRONTEND_CONTAINER_PORT="$(frontend_container_port "$FRONTEND_DOCKERFILE")"
 [ -n "$FRONTEND_CONTAINER_PORT" ] \
-  || fail "could not determine the frontend's container port from 3_89/Dockerfile.frontend -- declare it via EXPOSE, or keep using serve's \"-l <port>\" argument"
+  || fail "could not determine the frontend's container port from 3_08/Dockerfile.frontend -- declare it via EXPOSE, or keep using serve's \"-l <port>\" argument"
 pass "frontend's container port is $FRONTEND_CONTAINER_PORT"
 
 docker build -f "$FRONTEND_DOCKERFILE" -t "$FRONTEND_IMAGE" "$REPO_ROOT" >/dev/null 2>&1 \
-  || fail "docker build failed for 3_89/Dockerfile.frontend"
+  || fail "docker build failed for 3_08/Dockerfile.frontend"
 pass "frontend image builds"
 
 docker run -d --name "$FRONTEND_CONTAINER" -p "$FRONTEND_CONTAINER_PORT:$FRONTEND_CONTAINER_PORT" "$FRONTEND_IMAGE" >/dev/null 2>&1 \

@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
-# Verifies exercise 3.9: 3_89/Dockerfile.backend is a genuine multi-stage
+# Verifies exercise 3.9: 3_09/Dockerfile.backend is a genuine multi-stage
 # build -- a build stage that compiles the Go binary, and a separate final
 # stage built FROM scratch that only contains that compiled binary (via
 # COPY --from=<build stage>), not the Go toolchain or the original source.
 # Functional correctness is then checked together with the multi-stage
-# frontend from exercise 3.8 (3_89/Dockerfile.frontend) -- by wiring the two
+# frontend from exercise 3.8 (3_09/Dockerfile.frontend) -- by wiring the two
 # containers together and pressing the "backend" exercise button in the
 # frontend with a real browser (Playwright) and waiting for it to report
 # success.
 set -uo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-BACKEND_DOCKERFILE="$REPO_ROOT/3_89/Dockerfile.backend"
-FRONTEND_DOCKERFILE="$REPO_ROOT/3_89/Dockerfile.frontend"
+BACKEND_DOCKERFILE="$REPO_ROOT/3_09/Dockerfile.backend"
+FRONTEND_DOCKERFILE="$REPO_ROOT/3_09/Dockerfile.frontend"
 PLAYWRIGHT_DIR="$REPO_ROOT/tests/playwright"
 
 BACKEND_IMAGE="dod-3-9-backend:test"
@@ -35,9 +35,9 @@ cleanup() {
 }
 trap cleanup EXIT
 
-[ -f "$BACKEND_DOCKERFILE" ] || fail "3_89/Dockerfile.backend not found"
-[ -f "$FRONTEND_DOCKERFILE" ] || fail "3_89/Dockerfile.frontend (the 3.8 multi-stage frontend) not found"
-pass "3_89/Dockerfile.backend and 3_89/Dockerfile.frontend exist"
+[ -f "$BACKEND_DOCKERFILE" ] || fail "3_09/Dockerfile.backend not found"
+[ -f "$FRONTEND_DOCKERFILE" ] || fail "3_09/Dockerfile.frontend (the 3.8 multi-stage frontend) not found"
+pass "3_09/Dockerfile.backend and 3_09/Dockerfile.frontend exist"
 
 # Must actually be multi-stage: more than one FROM instruction.
 from_count=$(grep -cE '^\s*FROM\s+' "$BACKEND_DOCKERFILE")
@@ -69,11 +69,11 @@ echo "$FINAL_STAGE" | grep -qE 'COPY[[:space:]]+code/example-backend' \
 pass "final stage does not rebuild from the original source"
 
 docker build -f "$BACKEND_DOCKERFILE" -t "$BACKEND_IMAGE" "$REPO_ROOT" >/dev/null 2>&1 \
-  || fail "docker build failed for 3_89/Dockerfile.backend"
+  || fail "docker build failed for 3_09/Dockerfile.backend"
 pass "backend image builds"
 
 docker build -f "$FRONTEND_DOCKERFILE" -t "$FRONTEND_IMAGE" "$REPO_ROOT" >/dev/null 2>&1 \
-  || fail "docker build failed for 3_89/Dockerfile.frontend"
+  || fail "docker build failed for 3_09/Dockerfile.frontend"
 pass "frontend image builds"
 
 # The frontend may use any static file server (exercise 3.8 allows swapping
@@ -89,7 +89,7 @@ frontend_container_port() {
 }
 FRONTEND_CONTAINER_PORT="$(frontend_container_port "$FRONTEND_DOCKERFILE")"
 [ -n "$FRONTEND_CONTAINER_PORT" ] \
-  || fail "could not determine the frontend's container port from 3_89/Dockerfile.frontend -- declare it via EXPOSE, or keep using serve's \"-l <port>\" argument"
+  || fail "could not determine the frontend's container port from 3_09/Dockerfile.frontend -- declare it via EXPOSE, or keep using serve's \"-l <port>\" argument"
 
 # The backend only accepts CORS requests from the origin baked into its
 # REQUEST_ORIGIN env var, so the frontend has to be published on that exact
@@ -99,7 +99,7 @@ backend_cors_port() {
 }
 FRONTEND_HOST_PORT="$(backend_cors_port "$BACKEND_DOCKERFILE")"
 [ -n "$FRONTEND_HOST_PORT" ] \
-  || fail "could not read the expected frontend origin port from 3_89/Dockerfile.backend's REQUEST_ORIGIN"
+  || fail "could not read the expected frontend origin port from 3_09/Dockerfile.backend's REQUEST_ORIGIN"
 pass "frontend will be published on port $FRONTEND_HOST_PORT (matching the backend's REQUEST_ORIGIN), container listens on $FRONTEND_CONTAINER_PORT"
 
 docker run -d --name "$BACKEND_CONTAINER" -p "$BACKEND_PORT:$BACKEND_PORT" "$BACKEND_IMAGE" >/dev/null 2>&1 \
