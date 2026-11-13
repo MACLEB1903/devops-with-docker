@@ -11,6 +11,9 @@ permissions:
 jobs:
   discover:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 04-security-and-optimization
     outputs:
       tests: ${{ steps.list.outputs.tests }}
     steps:
@@ -35,4 +38,4 @@ jobs:
           node-version: 22
 
       - name: Run ${{ matrix.test_script }}
-        run: bash "${{ matrix.test_script }}"
+        run: bash "04-security-and-optimization/${{ matrix.test_script }}"
