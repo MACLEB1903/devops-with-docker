@@ -1,0 +1,9 @@
+node_modules/
+.git/
+.github/
+.gitignore
+.env*
+backup/
+documentation/
+tests/
+README.md
