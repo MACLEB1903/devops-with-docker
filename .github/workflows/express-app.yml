@@ -32,7 +32,7 @@ jobs:
       - name: Build and push Docker Image
         uses: docker/build-push-action@v5
         with:
-          context: "./04-security-and-optimization/3_1/express-app/"
+          context: "./04-security-and-optimization/3_01/express-app/"
           push: true
           tags: |
             ${{ env.IMAGE_NAME }}:latest
